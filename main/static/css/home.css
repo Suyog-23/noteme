@@ -1,0 +1,9 @@
+nav-item{
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+      background-color: olive;
+    }
+  }
