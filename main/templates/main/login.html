@@ -2,19 +2,51 @@
 
 {% block content %}
 
-<h1 style="color: white;">Login</h3>
+<h1 style=" margin-top: 100px; color: white;">Login</h1>
 
-<form action="login" method="POST" style="margin-top: 100px;">
-    {% csrf_token %}
-    <p style="color: white;">Username: <input type="text" name="username"></p>
+{% for message in messages %}
+<div class="alert alert-info" role="alert">
+   
+    <h3 style="color: black;">{{message}}</h3>
+  
+</div>
+{% endfor %}
+
+    <!-- <p style="color: white;">Username: <input type="text" name="username"></p>
     <p style="color: white;">Password: <input type="password" name="password"></p>
-    <input type="submit">
+    <input type="submit"> -->
+    <form method="POST">
+      {% csrf_token %}
+    <div class="input-group input-group-sm mb-3">
+      
+    
+      <div class="input-group" style="margin-top: 50px;">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+          <input type="radio" aria-label="Radio button for following text input">
+          </div>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Username" name="username">
+      </div>
+      </div>
+
+      <div class="input-group input-group-sm mb-3">
+      
+    
+        <div class="input-group" style="margin-top: 30px;">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+            <input type="radio" aria-label="Radio button for following text input">
+            </div>
+          </div>
+          <input type="password" class="form-control" aria-label="Text input with radio button" placeholder="Your Password" name="password">
+        </div>
+        </div>
+
+        <button type="submit" class="btn btn-light" style="margin-top: 30px;">Login</button>
+
 </form>
 
-<div class="container">
-    {% for message in messages %} 
-      <h3 style="color: white;">{{message}}</h3>
-    {% endfor %}  
-  </div>
+<h5 style="color: white;">Don't have an account? <a href="{% url 'register' %}" >Register</a></h5>
 
 {% endblock %}

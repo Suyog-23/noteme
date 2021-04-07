@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from main.models import Contact
 
 # Create your views here.
 
@@ -57,3 +58,9 @@ def registerview(request):
 def logout(request):
     auth.logout(request)
     return redirect('homepage')
+
+# def contactform(request):
+#     form = Contact.objects.all()
+#     return render(request, 'main/contact.html', 
+#     {"form":form}
+#     )
