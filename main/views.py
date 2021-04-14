@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from main.models import Contact
+from main.models import Contact, Lectures
+from ibm_watson import SpeechToTextV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import subprocess 
+import os
 
 # Create your views here.
 
@@ -59,8 +63,32 @@ def logout(request):
     auth.logout(request)
     return redirect('homepage')
 
+
+
 # def contactform(request):
 #     form = Contact.objects.all()
 #     return render(request, 'main/contact.html', 
 #     {"form":form}
 #     )
+
+def create_lecture(request):
+    if request.method=='POST':
+
+        apikey = 'wiMX7H_yC9WT-eCVQjVFb4JnsDTTY2Si7bymAKmfg1GQ'
+        url = 'https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/cbfc812d-7c73-41a8-b254-83b8fa26a64f'
+        authenticator = IAMAuthenticator(apikey)
+        stt = SpeechToTextV1(authenticator = authenticator)
+        stt.set_service_url(url)
+        files = []
+        filename= os.path.join(os.path.dirname(os.path.dirname(__file__)),r'NoteMe\output.wav')
+        results = []
+        with open(filename, 'rb') as f:
+            res = stt.recognize(audio=f, content_type='audio/wav', model='en-GB_NarrowbandModel', continuous=True, \
+                    inactivity_timeout=360).get_result()
+        results.append(res)
+        lec_notes = res['results'][0]['alternatives'][0]['transcript']
+        lecture = Lectures(notes=lec_notes)
+        lecture.save()
+        return redirect('homepage')
+    else:
+        return render(request, 'main/record.html')
