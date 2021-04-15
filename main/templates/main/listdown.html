@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div style="margin-top: 100px;">
+{% for lecture in lectures %}
+
+<li class="list-group-item list-group-item-info" style="margin-top: 50px;">
+    <span style="font-weight: bold;">{{lecture.subject}} </span> | {{lecture.date_uploaded}} 
+</li>
+<li class="list-group-item list-group-item-light">
+    {{lecture.notes}}
+</li>
+
+{% endfor %}
+</div>
+
+{% else %}
+
+<li class="list-group-item list-group-item-info" style="margin-top: 300px;">
+    You need to be logined to view the lectures! 
+</li>
+
+{% endif %}
+
+{% endblock %}
+

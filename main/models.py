@@ -13,7 +13,7 @@ class Lectures(models.Model):
     subject = models.CharField(max_length=200, default='Add here')
     date_uploaded = models.DateField(auto_now_add=True)
     notes = models.TextField(default='')
-
+    
     def __str__(self):
         return self.subject + ' | ' + str(self.date_uploaded)
     
