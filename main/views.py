@@ -80,7 +80,7 @@ def create_lecture(request):
         stt = SpeechToTextV1(authenticator = authenticator)
         stt.set_service_url(url)
         files = []
-        filename= os.path.join(os.path.dirname(os.path.dirname(__file__)),r'noteme\output.wav')
+        filename= os.path.join(os.path.dirname(os.path.dirname(__file__)),r'main\static\audio\output.wav')
         results = []
         with open(filename, 'rb') as f:
             res = stt.recognize(audio=f, content_type='audio/wav', model='en-GB_NarrowbandModel', continuous=True, \
